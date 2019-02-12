@@ -7,6 +7,7 @@ import java.io.FileFilter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.Scanner;
 import java.util.ServiceLoader;
 
 public class Main {
@@ -17,11 +18,13 @@ public class Main {
         main.run(args);
     }
 
-    private URLClassLoader createClassLoader(String fileLocation){
+    private URLClassLoader createClassLoader(String fileLocation) {
         File loc = new File(fileLocation);
 
         File[] flist = loc.listFiles(new FileFilter() {
-            public boolean accept(File file) {return file.getPath().toLowerCase().endsWith(".jar");}
+            public boolean accept(File file) {
+                return file.getPath().toLowerCase().endsWith(".jar");
+            }
         });
         URL[] urls = new URL[flist.length];
         for (int i = 0; i < flist.length; i++) {
@@ -46,7 +49,18 @@ public class Main {
             System.out.println(greetings.calculate(2, 3));
         }
 
-        
+        Scanner scanner = new Scanner(System.in);
 
+        System.out.println("Press enter to load new plugins");
+        scanner.nextLine();
+
+        ucl = createClassLoader(args[0]);
+
+        loader = ServiceLoader.load(Greetings.class, ucl);
+
+        for (Greetings greetings : loader) {
+            greetings.printYourGreeting();
+            System.out.println(greetings.calculate(2, 3));
+        }
     }
 }
