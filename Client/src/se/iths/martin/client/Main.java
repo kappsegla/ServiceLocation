@@ -17,9 +17,20 @@ public class Main {
         ServiceLoader<Greetings> loader =
                 ServiceLoader.load(Greetings.class);
 
-        for(Greetings greetings: loader){
+        for (Greetings greetings : loader) {
             greetings.printYourGreeting();
-            System.out.println(greetings.calculate(2,3));
+            System.out.println(greetings.calculate(2, 3));
+        }
+
+        for (Greetings greetings : loader) {
+            greetings.printYourGreeting();
+            System.out.println(greetings.calculate(2, 3));
+        }
+
+        loader = ServiceLoader.load(Greetings.class);
+        for (Greetings greetings : loader) {
+            greetings.printYourGreeting();
+            System.out.println(greetings.calculate(2, 3));
         }
     }
 }
