@@ -1,3 +1,5 @@
+package se.iths.martin.client;
+
 public class Main {
 
 
@@ -8,7 +10,7 @@ public class Main {
 
     private void run() {
 
-        
+
 
 
     }
