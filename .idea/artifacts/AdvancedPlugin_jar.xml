@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="AdvancedPlugin:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/lib</output-path>
+    <root id="archive" name="AdvancedPlugin.jar">
+      <element id="module-output" name="AdvancedPlugin" />
+    </root>
+  </artifact>
+</component>
