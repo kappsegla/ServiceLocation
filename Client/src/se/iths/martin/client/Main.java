@@ -17,9 +17,7 @@ public class Main {
         main.run(args);
     }
 
-    private void run(String[] args) {
-
-        String fileLocation = args[0];
+    private URLClassLoader createClassLoader(String fileLocation){
         File loc = new File(fileLocation);
 
         File[] flist = loc.listFiles(new FileFilter() {
@@ -33,7 +31,12 @@ public class Main {
                 e.printStackTrace();
             }
         }
-        URLClassLoader ucl = new URLClassLoader(urls);
+        return new URLClassLoader(urls);
+    }
+
+    private void run(String[] args) {
+
+        URLClassLoader ucl = createClassLoader(args[0]);
 
         ServiceLoader<Greetings> loader =
                 ServiceLoader.load(Greetings.class, ucl);
@@ -42,5 +45,8 @@ public class Main {
             greetings.printYourGreeting();
             System.out.println(greetings.calculate(2, 3));
         }
+
+        
+
     }
 }
