@@ -1,5 +1,6 @@
 package se.iths.martin.client;
 
+import se.iths.martin.api.Adress;
 import se.iths.martin.api.Greetings;
 
 import java.io.File;
@@ -9,6 +10,8 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Scanner;
 import java.util.ServiceLoader;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -44,7 +47,22 @@ public class Main {
         ServiceLoader<Greetings> loader =
                 ServiceLoader.load(Greetings.class, ucl);
 
-        for (Greetings greetings : loader) {
+        for (Greetings greetings: loader) {
+            if( greetings.getClass().getAnnotation(Adress.class).value().equals("/Greeting"))
+                greetings.printYourGreeting();
+        }
+
+
+        Set<Greetings> pages = loader
+                .stream()
+                .filter(p -> p.type().isAnnotationPresent(Adress.class)
+                      &&  p.type().getAnnotation(Adress.class).value().equals("/Greeting"))
+                .map(ServiceLoader.Provider::get)
+                .collect(Collectors.toSet());
+
+        for (Greetings greetings : pages) {
+
+
             greetings.printYourGreeting();
             System.out.println(greetings.calculate(2, 3));
         }

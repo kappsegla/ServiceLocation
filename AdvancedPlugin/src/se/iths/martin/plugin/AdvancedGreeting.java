@@ -1,7 +1,8 @@
 package se.iths.martin.plugin;
 
+import se.iths.martin.api.Adress;
 import se.iths.martin.api.Greetings;
-
+@Adress("/Greeting")
 public class AdvancedGreeting implements Greetings {
 
     @Override
