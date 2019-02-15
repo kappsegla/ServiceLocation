@@ -8,9 +8,11 @@ import java.io.FileFilter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.ServiceLoader;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -48,37 +50,24 @@ public class Main {
                 ServiceLoader.load(Greetings.class, ucl);
 
         for (Greetings greetings: loader) {
-            if( greetings.getClass().getAnnotation(Adress.class).value().equals("/Greeting"))
+            if( greetings.getClass().getAnnotation(Adress.class).value().equals("/v1/Greeting"))
                 greetings.printYourGreeting();
         }
 
 
-        Set<Greetings> pages = loader
+        Optional<Greetings> page = loader
                 .stream()
                 .filter(p -> p.type().isAnnotationPresent(Adress.class)
-                      &&  p.type().getAnnotation(Adress.class).value().equals("/Greeting"))
-                .map(ServiceLoader.Provider::get)
-                .collect(Collectors.toSet());
-
-        for (Greetings greetings : pages) {
+                      &&  p.type().getAnnotation(Adress.class).value().equals("/v1/Greeting"))
+                .map(ServiceLoader.Provider::get).findFirst();
 
 
-            greetings.printYourGreeting();
-            System.out.println(greetings.calculate(2, 3));
-        }
-
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Press enter to load new plugins");
-        scanner.nextLine();
-
-        ucl = createClassLoader(args[0]);
-
-        loader = ServiceLoader.load(Greetings.class, ucl);
-
-        for (Greetings greetings : loader) {
-            greetings.printYourGreeting();
-            System.out.println(greetings.calculate(2, 3));
-        }
+//
+//        for (Greetings greetings : pages) {
+//
+//
+//            greetings.printYourGreeting();
+//            System.out.println(greetings.calculate(2, 3));
+//        }
     }
 }
