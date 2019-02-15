@@ -54,12 +54,12 @@ public class Main {
                 greetings.printYourGreeting();
         }
 
-
-        Optional<Greetings> page = loader
-                .stream()
-                .filter(p -> p.type().isAnnotationPresent(Adress.class)
-                      &&  p.type().getAnnotation(Adress.class).value().equals("/v1/Greeting"))
-                .map(ServiceLoader.Provider::get).findFirst();
+//          Requires java >9
+//        Optional<Greetings> page = loader
+//                .stream()
+//                .filter(p -> p.type().isAnnotationPresent(Adress.class)
+//                      &&  p.type().getAnnotation(Adress.class).value().equals("/v1/Greeting"))
+//                .map(ServiceLoader.Provider::get).findFirst();
 
 
 //
