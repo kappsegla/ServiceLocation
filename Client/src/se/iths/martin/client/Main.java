@@ -4,10 +4,14 @@ import se.iths.martin.spi.Greetings;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.lang.module.Configuration;
+import java.lang.module.ModuleFinder;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.file.Path;
 import java.util.ServiceLoader;
+import java.util.Set;
 
 public class Main {
 
@@ -37,10 +41,10 @@ public class Main {
 
     private void run(String[] args) {
 
-        URLClassLoader ucl = createClassLoader(args[0]);
+        //URLClassLoader ucl = createClassLoader(args[0]);
 
         ServiceLoader<Greetings> loader =
-                ServiceLoader.load(Greetings.class, ucl);
+                ServiceLoader.load(Greetings.class);
 
         for (Greetings greetings: loader) {
             greetings.printYourGreeting();
