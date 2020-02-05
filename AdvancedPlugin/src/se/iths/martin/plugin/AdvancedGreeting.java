@@ -1,7 +1,7 @@
 package se.iths.martin.plugin;
 
-import se.iths.martin.api.Adress;
-import se.iths.martin.api.Greetings;
+import se.iths.martin.spi.Adress;
+import se.iths.martin.spi.Greetings;
 @Adress("/v1/Greeting")
 public class AdvancedGreeting implements Greetings {
 
