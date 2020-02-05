@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 
 public class Main {
 
-
     public static void main(String[] args) {
         Main main = new Main();
         main.run(args);
@@ -50,9 +49,10 @@ public class Main {
                 ServiceLoader.load(Greetings.class, ucl);
 
         for (Greetings greetings: loader) {
-            if( greetings.getClass().getAnnotation(Adress.class).value().equals("/v1/Greeting"))
                 greetings.printYourGreeting();
         }
+
+        //if( greetings.getClass().getAnnotation(Adress.class).value().equals("/v1/Greeting"))
 
 //          Requires java >9
 //        Optional<Greetings> page = loader
