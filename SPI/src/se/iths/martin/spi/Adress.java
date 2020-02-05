@@ -1,4 +1,4 @@
-package se.iths.martin.api;
+package se.iths.martin.spi;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

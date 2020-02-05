@@ -1,4 +1,4 @@
-package se.iths.martin.api;
+package se.iths.martin.spi;
 
 public interface Greetings {
     void printYourGreeting();

@@ -1,19 +1,15 @@
 package se.iths.martin.client;
 
-import se.iths.martin.api.Adress;
-import se.iths.martin.api.Greetings;
+import se.iths.martin.spi.Adress;
+import se.iths.martin.spi.GreetingProvider;
+import se.iths.martin.spi.Greetings;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.Optional;
-import java.util.Scanner;
 import java.util.ServiceLoader;
-import java.util.Set;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class Main {
 
@@ -45,13 +41,20 @@ public class Main {
 
         URLClassLoader ucl = createClassLoader(args[0]);
 
-        ServiceLoader<Greetings> loader =
-                ServiceLoader.load(Greetings.class, ucl);
+        ServiceLoader<GreetingProvider> loader =
+                ServiceLoader.load(GreetingProvider.class, ucl);
 
-        for (Greetings greetings: loader) {
-                greetings.printYourGreeting();
+        for (GreetingProvider greetings: loader) {
+            greetings.create().printYourGreeting();
         }
-
+//        for (Greetings greetings: loader) {
+//            greetings.printYourGreeting();
+//        }
+//
+//      //  loader.reload();
+//        for (Greetings greetings: loader) {
+//            greetings.printYourGreeting();
+//        }
         //if( greetings.getClass().getAnnotation(Adress.class).value().equals("/v1/Greeting"))
 
 //          Requires java >9
