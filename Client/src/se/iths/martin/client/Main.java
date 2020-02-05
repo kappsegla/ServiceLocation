@@ -1,7 +1,5 @@
 package se.iths.martin.client;
 
-import se.iths.martin.spi.Adress;
-import se.iths.martin.spi.GreetingProvider;
 import se.iths.martin.spi.Greetings;
 
 import java.io.File;
@@ -41,11 +39,11 @@ public class Main {
 
         URLClassLoader ucl = createClassLoader(args[0]);
 
-        ServiceLoader<GreetingProvider> loader =
-                ServiceLoader.load(GreetingProvider.class, ucl);
+        ServiceLoader<Greetings> loader =
+                ServiceLoader.load(Greetings.class, ucl);
 
-        for (GreetingProvider greetings: loader) {
-            greetings.create().printYourGreeting();
+        for (Greetings greetings: loader) {
+            greetings.printYourGreeting();
         }
 //        for (Greetings greetings: loader) {
 //            greetings.printYourGreeting();
