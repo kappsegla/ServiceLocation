@@ -3,7 +3,6 @@
     <output-path>$PROJECT_DIR$/out/artifacts/</output-path>
     <root id="archive" name="Client.jar">
       <element id="module-output" name="Client" />
-      <element id="module-output" name="SPI" />
     </root>
   </artifact>
 </component>
