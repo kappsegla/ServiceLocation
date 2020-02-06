@@ -6,6 +6,7 @@ import se.iths.martin.spi.Greetings;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 import java.lang.module.Configuration;
 import java.lang.module.ModuleFinder;
 import java.lang.reflect.InvocationTargetException;
@@ -15,6 +16,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Path;
 import java.util.Optional;
+import java.util.Scanner;
 import java.util.ServiceLoader;
 import java.util.Set;
 
@@ -50,9 +52,6 @@ public class Main {
 
         ServiceLoader<Greetings> loader =
                 ServiceLoader.load(Greetings.class);
-
-
-
         pluginHandling(loader);
     }
 
