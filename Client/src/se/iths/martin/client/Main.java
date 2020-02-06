@@ -1,15 +1,20 @@
 package se.iths.martin.client;
 
+import se.iths.martin.spi.Adress;
+import se.iths.martin.spi.GET;
 import se.iths.martin.spi.Greetings;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.lang.module.Configuration;
 import java.lang.module.ModuleFinder;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.ServiceLoader;
 import java.util.Set;
 
@@ -46,33 +51,32 @@ public class Main {
         ServiceLoader<Greetings> loader =
                 ServiceLoader.load(Greetings.class);
 
-        for (Greetings greetings: loader) {
-            greetings.printYourGreeting();
-        }
-//        for (Greetings greetings: loader) {
-//            greetings.printYourGreeting();
-//        }
-//
-//      //  loader.reload();
-//        for (Greetings greetings: loader) {
-//            greetings.printYourGreeting();
-//        }
-        //if( greetings.getClass().getAnnotation(Adress.class).value().equals("/v1/Greeting"))
-
-//          Requires java >9
-//        Optional<Greetings> page = loader
-//                .stream()
-//                .filter(p -> p.type().isAnnotationPresent(Adress.class)
-//                      &&  p.type().getAnnotation(Adress.class).value().equals("/v1/Greeting"))
-//                .map(ServiceLoader.Provider::get).findFirst();
 
 
-//
-//        for (Greetings greetings : pages) {
-//
-//
-//            greetings.printYourGreeting();
-//            System.out.println(greetings.calculate(2, 3));
-//        }
+        pluginHandling(loader);
+    }
+
+    private void pluginHandling(ServiceLoader<Greetings> loader) {
+        Optional<Greetings> greetings =
+                loader.stream()
+                        .filter(g -> g.type().isAnnotationPresent(Adress.class))
+                        .filter(g -> g.type().getAnnotation(Adress.class).value().equals("/hello"))
+                        .map(ServiceLoader.Provider::get)
+                        .findFirst();
+
+        greetings.ifPresent(
+                greetings1 -> {
+                    Method[] methods = greetings1.getClass().getDeclaredMethods();
+                    for (Method m : methods) {
+                        if (m.isAnnotationPresent(GET.class)) {
+                            try {
+                                m.invoke(greetings1);
+                            } catch (IllegalAccessException | InvocationTargetException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+        );
     }
 }
